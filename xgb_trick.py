@@ -1,3 +1,10 @@
+'''
+Author: RockyHoo
+Date: 2021-11-17 21:38:32
+LastEditTime: 2021-11-17 21:50:54
+Description: xgboost预测
+FilePath: \Demand_predict\prophet_trick.py
+'''
 #%%
 import warnings
 import numpy as np
@@ -47,7 +54,6 @@ for group in tqdm.tqdm(product_gp.groups):
     
 demand_data=demand_filldate
 demand_data=demand_data.fillna(0)
-#%%
 date_sales = demand_data.drop(['工厂编码','物料编码'], axis=1).copy()
 #%%
 date_sales=date_sales.set_index("过账日期",drop=True)
@@ -68,7 +74,6 @@ store_daily_sales = demand_data.groupby(['工厂编码', '过账日期'], as_ind
 item_daily_sales = demand_data.groupby(['物料编码', '过账日期'], as_index=False)['需求量'].sum()
 #%%
 #构造日期特征
-import re
 def add_datepart(df, fldname, drop=True):
 
     """
